@@ -7,13 +7,11 @@ const path = require('path');
 const args = process.argv || [];
 const test = args.some(arg => arg.includes('jasmine'));
 
-const databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI || process.env.DATABASE_URL;
-
 if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 const config = {
-  databaseURI: databaseUri || 'mongodb://localhost:27017/dev',
+  databaseURI: `${process.env.DATABASE_URL}?ssl=true&rejectUnauthorized=false`,
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.APP_ID || 'myAppId',
   masterKey: process.env.MASTER_KEY || '', //Add your master key here. Keep it secret!
